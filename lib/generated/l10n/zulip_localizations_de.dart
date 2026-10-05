@@ -610,6 +610,23 @@ class ZulipLocalizationsDe extends ZulipLocalizations {
   String get composeBoxAttachFromCameraTooltip => 'Ein Foto aufnehmen';
 
   @override
+  String get composeBoxStartVoiceMessageTooltip => 'Sprachnachricht aufnehmen';
+
+  @override
+  String get composeBoxStopVoiceMessageTooltip => 'Aufnahme beenden und senden';
+
+  @override
+  String get composeBoxVoiceMessageLinkText => 'Sprachnachricht';
+
+  @override
+  String get composeBoxVoiceMessageErrorTitle =>
+      'Sprachnachricht konnte nicht gesendet werden';
+
+  @override
+  String get composeBoxVoiceMessageMicrophonePermissionDenied =>
+      'Für Sprachnachrichten wird Zugriff auf das Mikrofon benötigt.';
+
+  @override
   String get composeBoxGenericContentHint => 'Eine Nachricht eingeben';
 
   @override

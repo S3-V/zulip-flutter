@@ -172,6 +172,67 @@ void main() {
     await tester.pump(Duration.zero);
   }
 
+  group('voice messages', () {
+    testWidgets('record, upload, and send to the current topic', (tester) async {
+      TypingNotifier.debugEnable = false;
+      addTearDown(TypingNotifier.debugReset);
+      MessageStoreImpl.debugOutboxEnable = false;
+      addTearDown(MessageStoreImpl.debugReset);
+
+      final channel = eg.stream();
+      final narrow = eg.topicNarrow(channel.streamId, 'voice topic');
+      await prepareComposeBox(tester,
+        narrow: narrow, subscriptions: [eg.subscription(channel)]);
+
+      await tester.tap(find.byIcon(Icons.mic));
+      await tester.pump();
+      final recordingPath = testBinding.voiceRecorderStartCalls.single;
+      await File(recordingPath).writeAsBytes(utf8.encode('audio data'));
+      testBinding.voiceRecorderStopResult = recordingPath;
+      check(find.byIcon(Icons.stop_circle)).findsOne();
+
+      connection.prepare(json: UploadFileResult(
+        url: '/user_uploads/1/voice-message.m4a').toJson());
+      connection.prepare(json: SendMessageResult(id: 123).toJson());
+      await tester.tap(find.byIcon(Icons.stop_circle));
+      await tester.pumpAndSettle();
+
+      check(testBinding.voiceRecorderStopCallCount).equals(1);
+      check(await File(recordingPath).exists()).isFalse();
+      final requests = connection.takeRequests();
+      check(requests).length.equals(2);
+      check(requests[0]).isA<http.MultipartRequest>()
+        ..method.equals('POST')
+        ..url.path.equals('/api/v1/user_uploads');
+      check(requests[1]).isA<http.Request>()
+        ..method.equals('POST')
+        ..url.path.equals('/api/v1/messages')
+        ..bodyFields.deepEquals({
+          'type': 'channel',
+          'to': channel.streamId.toString(),
+          'topic': 'voice topic',
+          'content': '[Voice message](/user_uploads/1/voice-message.m4a)',
+          'read_by_sender': 'true',
+        });
+    });
+
+    testWidgets('microphone permission denied shows an error', (tester) async {
+      final channel = eg.stream();
+      await prepareComposeBox(tester,
+        narrow: eg.topicNarrow(channel.streamId, 'voice topic'),
+        subscriptions: [eg.subscription(channel)]);
+      testBinding.voiceRecorderHasPermissionResult = false;
+
+      await tester.tap(find.byIcon(Icons.mic));
+      await tester.pump();
+
+      checkErrorDialog(tester,
+        expectedTitle: 'Could not send voice message',
+        expectedMessage: 'Microphone access is required to record a voice message.');
+      check(testBinding.voiceRecorderStartCalls).isEmpty();
+    });
+  });
+
   group('auto focus', () {
     testWidgets('ChannelNarrow, non-empty fetch', (tester) async {
       final channel = eg.stream();

@@ -696,6 +696,26 @@
   "@composeBoxAttachFromCameraTooltip": {
     "description": "Tooltip for compose box icon to attach an image from the camera to the message."
   },
+  "composeBoxStartVoiceMessageTooltip": "Record a voice message",
+  "@composeBoxStartVoiceMessageTooltip": {
+    "description": "Tooltip for the compose-box microphone button when no recording is in progress."
+  },
+  "composeBoxStopVoiceMessageTooltip": "Stop and send voice message",
+  "@composeBoxStopVoiceMessageTooltip": {
+    "description": "Tooltip for the compose-box stop button while a voice message is being recorded."
+  },
+  "composeBoxVoiceMessageLinkText": "Voice message",
+  "@composeBoxVoiceMessageLinkText": {
+    "description": "Link text for an uploaded voice message."
+  },
+  "composeBoxVoiceMessageErrorTitle": "Could not send voice message",
+  "@composeBoxVoiceMessageErrorTitle": {
+    "description": "Title for an error dialog when recording or sending a voice message fails."
+  },
+  "composeBoxVoiceMessageMicrophonePermissionDenied": "Microphone access is required to record a voice message.",
+  "@composeBoxVoiceMessageMicrophonePermissionDenied": {
+    "description": "Message shown when microphone permission was not granted for voice-message recording."
+  },
   "composeBoxGenericContentHint": "Type a message",
   "@composeBoxGenericContentHint": {
     "description": "Hint text for content input when sending a message."

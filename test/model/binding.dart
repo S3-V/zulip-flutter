@@ -87,6 +87,7 @@ class TestZulipBinding extends ZulipBinding {
     _resetPickFiles();
     _resetPickImage();
     _resetPickMultipleMedia();
+    _resetVoiceRecorder();
     _resetWakelock();
   }
 
@@ -540,6 +541,39 @@ class TestZulipBinding extends ZulipBinding {
   }) async {
     (_pickMultipleMediaCalls ??= []).add((requestFullMetadata: requestFullMetadata));
     return pickMultipleMediaResult;
+  }
+
+  bool voiceRecorderHasPermissionResult = true;
+  String? voiceRecorderStopResult;
+  final List<String> voiceRecorderStartCalls = [];
+  int voiceRecorderStopCallCount = 0;
+  int voiceRecorderCancelCallCount = 0;
+
+  void _resetVoiceRecorder() {
+    voiceRecorderHasPermissionResult = true;
+    voiceRecorderStopResult = null;
+    voiceRecorderStartCalls.clear();
+    voiceRecorderStopCallCount = 0;
+    voiceRecorderCancelCallCount = 0;
+  }
+
+  @override
+  Future<bool> voiceRecorderHasPermission() async => voiceRecorderHasPermissionResult;
+
+  @override
+  Future<void> voiceRecorderStart(String path) async {
+    voiceRecorderStartCalls.add(path);
+  }
+
+  @override
+  Future<String?> voiceRecorderStop() async {
+    voiceRecorderStopCallCount += 1;
+    return voiceRecorderStopResult;
+  }
+
+  @override
+  Future<void> voiceRecorderCancel() async {
+    voiceRecorderCancelCallCount += 1;
   }
 
   /// Returns the current status of wakelock, which can be

@@ -1121,6 +1121,36 @@ abstract class ZulipLocalizations {
   /// **'Take a photo'**
   String get composeBoxAttachFromCameraTooltip;
 
+  /// Tooltip for the compose-box microphone button when no recording is in progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Record a voice message'**
+  String get composeBoxStartVoiceMessageTooltip;
+
+  /// Tooltip for the compose-box stop button while a voice message is being recorded.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop and send voice message'**
+  String get composeBoxStopVoiceMessageTooltip;
+
+  /// Link text for an uploaded voice message.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice message'**
+  String get composeBoxVoiceMessageLinkText;
+
+  /// Title for an error dialog when recording or sending a voice message fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not send voice message'**
+  String get composeBoxVoiceMessageErrorTitle;
+
+  /// Message shown when microphone permission was not granted for voice-message recording.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone access is required to record a voice message.'**
+  String get composeBoxVoiceMessageMicrophonePermissionDenied;
+
   /// Hint text for content input when sending a message.
   ///
   /// In en, this message translates to:

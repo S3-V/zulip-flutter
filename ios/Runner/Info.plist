@@ -43,6 +43,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>By allowing camera access, you can take photos and send them in Zulip messages.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>By allowing microphone access, you can record and send voice messages in Zulip.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Choose photos from your library and send them in Zulip messages.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

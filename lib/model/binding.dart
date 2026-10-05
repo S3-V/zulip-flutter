@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart' as image_picker;
 import 'package:image_picker_android/image_picker_android.dart' as image_picker_android;
 import 'package:image_picker_platform_interface/image_picker_platform_interface.dart' as image_picker_platform;
 import 'package:package_info_plus/package_info_plus.dart' as package_info_plus;
+import 'package:record/record.dart' as record;
 import 'package:sodium/sodium.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'package:wakelock_plus/wakelock_plus.dart' as wakelock_plus;
@@ -268,6 +269,18 @@ abstract class ZulipBinding {
   Future<List<image_picker.XFile>> pickMultipleMedia({
     bool requestFullMetadata,
   });
+
+  /// Check for microphone permission before recording a voice message.
+  Future<bool> voiceRecorderHasPermission();
+
+  /// Start recording a voice message to [path].
+  Future<void> voiceRecorderStart(String path);
+
+  /// Stop the active voice-message recording and return its file path.
+  Future<String?> voiceRecorderStop();
+
+  /// Cancel the active voice-message recording.
+  Future<void> voiceRecorderCancel();
 
   /// Enables or disables keeping the screen on, via package:wakelock_plus.
   ///
@@ -676,6 +689,27 @@ class LiveZulipBinding extends ZulipBinding {
     return image_picker.ImagePicker()
       .pickMultipleMedia(requestFullMetadata: requestFullMetadata);
   }
+
+  final record.AudioRecorder _voiceRecorder = record.AudioRecorder();
+
+  @override
+  Future<bool> voiceRecorderHasPermission() => _voiceRecorder.hasPermission();
+
+  @override
+  Future<void> voiceRecorderStart(String path) => _voiceRecorder.start(
+    const record.RecordConfig(
+      encoder: record.AudioEncoder.aacLc,
+      bitRate: 128000,
+      sampleRate: 44100,
+    ),
+    path: path,
+  );
+
+  @override
+  Future<String?> voiceRecorderStop() => _voiceRecorder.stop();
+
+  @override
+  Future<void> voiceRecorderCancel() => _voiceRecorder.cancel();
 
   @override
   Future<void> toggleWakelock({required bool enable}) async {

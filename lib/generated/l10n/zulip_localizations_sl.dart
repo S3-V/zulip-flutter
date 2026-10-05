@@ -613,6 +613,22 @@ class ZulipLocalizationsSl extends ZulipLocalizations {
   String get composeBoxAttachFromCameraTooltip => 'Fotografiraj';
 
   @override
+  String get composeBoxStartVoiceMessageTooltip => 'Record a voice message';
+
+  @override
+  String get composeBoxStopVoiceMessageTooltip => 'Stop and send voice message';
+
+  @override
+  String get composeBoxVoiceMessageLinkText => 'Voice message';
+
+  @override
+  String get composeBoxVoiceMessageErrorTitle => 'Could not send voice message';
+
+  @override
+  String get composeBoxVoiceMessageMicrophonePermissionDenied =>
+      'Microphone access is required to record a voice message.';
+
+  @override
   String get composeBoxGenericContentHint => 'Vnesite sporočilo';
 
   @override
