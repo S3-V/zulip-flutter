@@ -1418,7 +1418,7 @@ class _VoiceMessageButtonState extends State<_VoiceMessageButton> {
         throw StateError('The recorder did not return an audio file.');
       }
       final recordingFile = File(recordingPath);
-      final length = await recordingFile.length();
+      final length = recordingFile.lengthSync();
       if (length == 0) {
         throw StateError('The recorded audio file is empty.');
       }
@@ -1463,7 +1463,7 @@ class _VoiceMessageButtonState extends State<_VoiceMessageButton> {
       _recordingPath = null;
       if (recordingPath != null) {
         try {
-          await File(recordingPath).delete();
+          File(recordingPath).deleteSync();
         } on FileSystemException {
           // The recorder may already have removed the temporary file.
         }

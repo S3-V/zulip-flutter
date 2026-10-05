@@ -116,6 +116,8 @@ PODS:
     - Flutter
     - FlutterMacOS
   - PromisesObjC (2.4.1)
+  - record_ios (2.0.0):
+    - Flutter
   - SDWebImage (5.21.7):
     - SDWebImage/Core (= 5.21.7)
   - SDWebImage/Core (5.21.7)
@@ -142,6 +144,7 @@ DEPENDENCIES:
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - patrol (from `.symlinks/plugins/patrol/darwin`)
+  - record_ios (from `.symlinks/plugins/record_ios/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/darwin`)
@@ -187,6 +190,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/package_info_plus/ios"
   patrol:
     :path: ".symlinks/plugins/patrol/darwin"
+  record_ios:
+    :path: ".symlinks/plugins/record_ios/ios"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
   url_launcher_ios:
@@ -220,6 +225,7 @@ SPEC CHECKSUMS:
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   patrol: 09773d9cd563ec54230813755b3231b2e8252aac
   PromisesObjC: 752c3227f599e3467650e47ea36f433eeb10c273
+  record_ios: 390a30c7caaf8b5d0fb1cb1d2fd5064b48b4520c
   SDWebImage: e9fc87c1aab89a8ab1bbd74eba378c6f53be8abf
   share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4

@@ -187,7 +187,7 @@ void main() {
       await tester.tap(find.byIcon(Icons.mic));
       await tester.pump();
       final recordingPath = testBinding.voiceRecorderStartCalls.single;
-      await File(recordingPath).writeAsBytes(utf8.encode('audio data'));
+      File(recordingPath).writeAsBytesSync(utf8.encode('audio data'));
       testBinding.voiceRecorderStopResult = recordingPath;
       check(find.byIcon(Icons.stop_circle)).findsOne();
 
@@ -195,10 +195,15 @@ void main() {
         url: '/user_uploads/1/voice-message.m4a').toJson());
       connection.prepare(json: SendMessageResult(id: 123).toJson());
       await tester.tap(find.byIcon(Icons.stop_circle));
-      await tester.pumpAndSettle();
+      // Advance the upload, send-message request, and final button state.
+      // pumpAndSettle would wait forever while the busy progress indicator
+      // continuously schedules animation frames.
+      await tester.pump(Duration.zero);
+      await tester.pump(Duration.zero);
+      await tester.pump(Duration.zero);
 
       check(testBinding.voiceRecorderStopCallCount).equals(1);
-      check(await File(recordingPath).exists()).isFalse();
+      check(File(recordingPath).existsSync()).isFalse();
       final requests = connection.takeRequests();
       check(requests).length.equals(2);
       check(requests[0]).isA<http.MultipartRequest>()
